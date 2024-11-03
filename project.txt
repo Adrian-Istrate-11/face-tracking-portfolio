@@ -1,0 +1,38 @@
+Write an app to track people entering and exiting the building.
+
+Business scenario:
+We here at Company Inc. value security above everything else. We need to be sure that the people that enter our building, also exit it in the expected manner.
+Employees, visitors and maintenance all get the same treatment: you come in, you must go out.
+
+QA
+Q: Who exactly enters your office?
+A: The people that can enter our office are:
+- Employees
+- Visitors, which often are friends or family of our employees
+- Maintenance, which are the people cleaning the office during afterhours
+
+Q: Could you describe how you would want the tracking to work like?
+A: We expect it to work as follows:
+- A person enters the building through the main door
+- The face of the person is registered in our database
+- If the person enters our office for the first time, we make them fill out an extensive form to ensure they are safe to enter
+- After that we also ask for the reason of the visit, duration, and who are they visiting
+- Once all of that is filled and validated, we let the person go on their way, while keeping a close eye on them
+- If ANY of the processes above trigger an alert we send in the security guards to escort the person outside
+
+Q: What could trigger an alert?
+A: The following can trigger an alert:
+- The reason of visiting is malicious
+- They are trying to visit a non-employee or an employee that is currently not at the office
+- Their scheduled time has ended and they haven't exited the office
+- Their scheduled time is longer than the employee's time in the company
+- Anything that we consider suspicious
+
+Q: Can we know more details about the employees' schedule?
+A: They work 3 days a week from 8 AM to 8 PM. At any given time, at least 10 employees are in the building.
+
+Q: Do the maintenance people come after 8 PM?
+A: They come in at 9 PM and have untill 4 AM to clean the entire office. They are expected to enter and exit through the backdoor.
+
+Q: What if an alert is triggered?
+A: We want to be notified immediatly via any sort of communication method as well as logging the alert for further reference.
