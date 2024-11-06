@@ -8,7 +8,7 @@ def test_person_with_valid_data()->None:
     pers=Person(
         person_name= "Alex",
         person_type="employee",
-        entry_time= 15,
+        entry_time=15,
         exit_time=16
 )
     
