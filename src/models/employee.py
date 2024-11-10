@@ -1,10 +1,18 @@
-from  pydantic import BaseModel
-from src.models.person import Person
+from sqlalchemy import Column, Integer, String  # Corect
+from .sql_base import SQL_Base  # Asigură-te că SQL_Base este importat corect
 
-class Employee(BaseModel):
-    employee: Person 
-    schedule: str
-    work_hours = (8, 20)
+class Employee(SQL_Base):
+    __tablename__ = 'employee'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False)
+    position = Column(String(100), nullable=False)
+    start_hour = Column(Integer, nullable=False, default=21)
+    end_hour = Column(Integer, nullable=False, default=4)
+
+
+
+
 
 
 
