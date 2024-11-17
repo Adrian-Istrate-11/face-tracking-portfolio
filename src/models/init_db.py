@@ -6,7 +6,7 @@ from .maintenance import Maintenance
 from .person import Person
 from .visitors import Visitors
 
-DATABASE_URL = "mysql+mysqlconnector://root:1117@localhost:3306/nenos_proiect_python"
+DATABASE_URL = "mysql+mysqlconnector://root:adolf@localhost:3306/face_tracking"
 
 # Crearea motorului de bază de date
 engine = create_engine(DATABASE_URL, echo=True)

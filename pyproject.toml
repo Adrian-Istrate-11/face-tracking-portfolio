@@ -11,8 +11,16 @@ python = "^3.12"
 pydantic = "^2.9.2"
 pytest = "^8.3.3"
 pylint = "^3.3.1"
+#required for sql
 sqlalchemy = "^2.0.36"
 pymysql = "^1.1.1"
+#other imports
+fastapi = "^0.115.5"
+uvicorn = "^0.32.0"
+dash = "^2.18.2"
+requests = "^2.32.3"
+dash-mantine-components = "^0.14.7"
+dash-iconify = "^0.1.2"
 
 
 [build-system]
