@@ -1,12 +1,12 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from .sql_base import SQL_Base
+from src.db.sql.models import SQL_Base
 from .person import Person
 from .employee import Employee
 
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from .sql_base import SQL_Base
+from src.db.sql.models import SQL_Base
 
 class Visitors(SQL_Base):
     __tablename__ = 'visitors'

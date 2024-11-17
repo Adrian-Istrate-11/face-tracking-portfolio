@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String  # Corect
-from .sql_base import SQL_Base  # Asigură-te că SQL_Base este importat corect
+from src.db.sql.models import SQL_Base  # Asigură-te că SQL_Base este importat corect
 
 class Employee(SQL_Base):
     __tablename__ = 'employee'
