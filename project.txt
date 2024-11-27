@@ -36,3 +36,34 @@ A: They come in at 9 PM and have untill 4 AM to clean the entire office. They ar
 
 Q: What if an alert is triggered?
 A: We want to be notified immediatly via any sort of communication method as well as logging the alert for further reference.
+
+
+
+ITERATIA A 2A 
+Business scenarios:
+
+1. See people currently in the office
+We want to be able to have a clear list of all the people in the office.
+This way we can quickly identify who is in the office and notice familiar or unfamiliar faces.
+
+2. See details about the people in the office
+We also insist on being able to see separately the details of the people we choose to.
+The following details are a must:
+- is it a visitor or an employee?
+    - if its an employee we want to know when they came in and when are they scheduled to leave
+    - if its a visitor we want to see:
+        - the reason of visiting
+        - the person they are visiting
+        - the duration of the visit
+        - all past visits of that person
+If we see any sort of dubious info we should have the option to trigger an alert immediately
+
+
+3. See alerts
+Our security force will be watching the alerts. If any are triggered they need to know which person has triggered the alert.
+They will then proceed to "handle" the problem.
+
+
+Technical details:
+Implement an API that communicates with the database using FastAPI
+Implement a Web App that communicates with the API using Dash. 

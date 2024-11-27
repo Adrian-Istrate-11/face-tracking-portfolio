@@ -5,8 +5,14 @@ from .employee import Employee  # Import corect pentru Employee
 from .maintenance import Maintenance
 from .person import Person
 from .visitors import Visitors
+from src.db.sql.connection import generate_sql_url
 
-DATABASE_URL = "mysql+mysqlconnector://root:adolf@localhost:3306/face_tracking"
+DATABASE_URL=generate_sql_url()
+
+#DATABASE_URL = "mysql+pymysql://Andreea:<password>@localhost:3306/<database_name>"
+
+#DATABASE_URL = "mysql+mysqlconnector://root:adolf@localhost:3306/face_tracking"
+#DATABASE_URL = "mysql+pymysql://Andreea:<password>@localhost:3306/<database_name>"
 
 # Crearea motorului de bază de date
 engine = create_engine(DATABASE_URL, echo=True)

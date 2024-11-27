@@ -19,7 +19,7 @@ class Visitors(SQL_Base):
     alert_triggered = Column(Boolean, default=False)
 
     # Relații
-    visitors = relationship("Person", back_populates="visits")
-    visiting_employee = relationship("Employee", back_populates="visited_by")
+    #visitors = relationship("Person", back_populates="visits")
+    #visiting_employee = relationship("Employee", back_populates="visited_by")
 
 
