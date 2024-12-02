@@ -10,12 +10,17 @@ class AddEmployeeComponent(DashAppBaseComponent):
 
     def render(self):
         return dmc.Stack(
-            children=[
+                children=[
+                # dmc.AccordionItem(
+
+
+                # )
                 dmc.TextInput(
                     id="add-employee-name",
                     label="Employee Name:",
                     w=200
                 ),
+                
                 dmc.TextInput(
                     id="add-employee-position",
                     label="Employee Position:",

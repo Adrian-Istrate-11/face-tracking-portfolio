@@ -4,7 +4,7 @@ from src.db.sql.models import Visitors
 
 
 
-def add_visitor_into_the_db(name: str, reason : str ,duration_hours: int ,alert_triggered: bool=False) -> None:
+def add_visitor_into_the_db(name: str, reason : str ,duration_hours: int ,alert_triggered: bool) -> None:
     """
     Add a visitor into the database
     """

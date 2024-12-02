@@ -15,7 +15,7 @@ def register_add_maintenance_callbacks(app: Dash) -> None:
     Register add maintenance callbacks
     """
     @app.callback(
-        Output('webapp-maintenance-content', "children"),
+        Output('maintenance-content', "children"),
         [
             Input("add-maintenance-button", "n_clicks"),
             Input("add-maintenance-name", "value"),
@@ -32,7 +32,7 @@ def register_add_maintenance_callbacks(app: Dash) -> None:
                 end_hour=maintenance_end_hour,
             
             )
-            response = requests.put(f"{API_URL}/maintenances", timeout=5, data=dto.json())
+            response = requests.put(f"{API_URL}/maintenance", timeout=5, data=dto.json())
             return response.status_code
 
         raise PreventUpdate

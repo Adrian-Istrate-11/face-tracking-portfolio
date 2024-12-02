@@ -14,7 +14,7 @@ def register_add_person_callbacks(app: Dash) -> None:
     Register add person callbacks
     """
     @app.callback(
-        Output('webapp-person-content', "children"),
+        Output('person-content', "children"),
         [
             Input("add-person-button", "n_clicks"),
             Input("add-person-name", "value"),
@@ -25,14 +25,14 @@ def register_add_person_callbacks(app: Dash) -> None:
     )
     def send_person_info_to_api(_: int, person_name: str, person_type: str,person_entry_time: int, person_exit_time: int):
         trigger = callback_context.triggered[0]
-        if trigger["prop_id"].split('.')[0] == "add-animal-button":
+        if trigger["prop_id"].split('.')[0] == "add-person-button":
             dto = AddPersonDto(
-                name=person_name ,
+                person_name=person_name ,
                 person_type=person_type,
                 entry_time=person_entry_time,
                 exit_time=person_exit_time
             )
-            response = requests.put(f"{API_URL}/persons", timeout=5, data=dto.json())
+            response = requests.put(f"{API_URL}/person", timeout=5, data=dto.json())
             return response.status_code
 
         raise PreventUpdate

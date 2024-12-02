@@ -15,7 +15,7 @@ def register_add_employee_callbacks(app: Dash) -> None:
     Register add employee callbacks
     """
     @app.callback(
-        Output('webapp-content', "children"),
+        Output('employee-content', "children"),
         [
             Input("add-employee-button", "n_clicks"),
             Input("add-employee-name", "value"),

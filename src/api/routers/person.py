@@ -17,7 +17,7 @@ def add_person(dto: AddPersonDto) -> Response:
     """
 
     add_person_into_the_db(
-        name=dto.name,
+        person_name=dto.person_name,
         person_type=dto.person_type,
         entry_time=dto.entry_time,
         exit_time=dto.exit_time,
