@@ -14,6 +14,9 @@ from src.api.routers.person import router as person_router
 from src.api.routers.maintenance import router as maintenance_router
 from src.api.routers.visitors import router as visitors_router
 
+
+from src.db.sql.init_db import init_sql_db
+
 # Create FastAPI app
 app = FastAPI(
     title="Nenos Academy Face-tracking API",
@@ -33,4 +36,8 @@ app.include_router(visitors_router, prefix="/visitor", tags=["Visitors"])
 
 # Run the app via uvicorn
 if __name__ == "__main__":
-    uvicorn.run("src.api.main:app", host=API_HOST, port=API_PORT, reload=True)
+    print ("Initializing SQL Database")
+    init_sql_db()
+    uvicorn.run("api.main:app", host=API_HOST, port=API_PORT, reload=True)
+  
+

@@ -1,0 +1,19 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: face-tracking-web
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: minikube.face-tracking # Replace with your desired hostname
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: face-tracking-web
+                port:
+                  number: 8050

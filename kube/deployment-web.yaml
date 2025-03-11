@@ -1,0 +1,39 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: face-tracking-web
+  labels:
+    app: face-tracking-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: face-tracking-web
+  template:
+    metadata:
+      labels:
+        app: face-tracking-web
+    spec:
+      containers:
+        - name: face-tracking-web
+          image:  nenos_face_tracking_repo-web:latest
+          imagePullPolicy: Never # Use "Never" for local images
+          # command: ["sh", "-c", "your-start-command-here"]
+          command: ["python3", "/app/src/web/main.py"]
+          resources:
+            requests:
+              memory: "128Mi" # Minimum memory required
+              cpu: "250m"     # Minimum CPU required
+            limits:
+              memory: "512Mi" # Maximum memory allowed
+              cpu: "500m"     
+          ports:
+            - containerPort: 8050
+          env:
+          - name: SQL_USER
+            value: "root"
+          - name: SQL_PASSWORD
+            value: "adolf"
+          - name: API_HOST
+            value: "face-tracking-api"

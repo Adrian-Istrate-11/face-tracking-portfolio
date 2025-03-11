@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  mysql:
+      image: mysql:8.0
+      container_name: mysql
+      ports:
+        - "3308:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: adolf
+        MYSQL_DATABASE: face_tracking
+        MYSQL_USER: my_user
+        MYSQL_PASSWORD: my_password
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        timeout: 20s
+        retries: 10
+      volumes:
+        - mysql_data:/var/lib/mysql
+  
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy 
+    container_name: face-tracking-api
+    environment:
+      SQL_USER: root
+      SQL_PASSWORD: adolf
+    command: ["python3", "/app/src/api/main.py"]
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    depends_on:
+      api:
+        condition: service_started
+    container_name: face-tracking-web
+    environment:
+      SQL_USER: root
+      SQL_PASSWORD: adolf
+    command: ["python3", "/app/src/web/main.py"]
+
+
+volumes:
+  mysql_data:

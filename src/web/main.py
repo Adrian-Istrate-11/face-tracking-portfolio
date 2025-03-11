@@ -6,6 +6,7 @@ import os
 from dash_iconify import DashIconify
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 #print(sys.path)
+from config import DASH_HOST, DASH_PORT
 from src.web.callbacks import register_all_callbacks
 from src.web.components.header import Header
 from src.web.components.add_employee import AddEmployeeComponent
@@ -15,6 +16,7 @@ from src.web.components.add_visitor import AddVisitorComponent
 from src.web.components.header import Subtitle
 from src.web.callbacks.api_status import register_api_status_callbacks
 
+# Create the Dash app
 app = dash.Dash(__name__)
 app.title = "API Status Checker"
 
@@ -152,4 +154,4 @@ register_all_callbacks(app)
 
 # Run the app
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host=DASH_HOST, port=str(DASH_PORT),debug=True)

@@ -6,13 +6,3 @@ class AddEmployeeDto(BaseModel):
     start_hour: int 
     end_hour: int
 
-
-######### 
-"""
-class EmployeeDto(AddEmployeeDto):
-    id: int
-
-    class Config:
-        orm_mode = True
-         
- """

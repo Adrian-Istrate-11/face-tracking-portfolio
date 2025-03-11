@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-db
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          imagePullPolicy: Never # Use "Never" for local images
+          # command: ["sh", "-c", "your-start-command-here"]
+          resources:
+            requests:
+              memory: "128Mi" # Minimum memory required
+              cpu: "250m"     # Minimum CPU required
+            limits:
+              memory: "512Mi" # Maximum memory allowed
+              cpu: "500m"     
+          ports:
+            - containerPort: 3306
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "adolf"
+          - name: MYSQL_DATABASE
+            value: "face_tracking"
+          - name: MYSQL_USER
+            value: "my_user"
+          - name: MYSQL_PASSWORD
+            value: "my_password"
+      volumes:
+      - name: mysql-db-data
+        persistentVolumeClaim:
+          claimName: mysql-db-pvc
