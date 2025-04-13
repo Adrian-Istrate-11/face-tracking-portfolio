@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from src.db.sql.models import SQL_Base
+from db.sql.connection import SQL_Base
 from sqlalchemy import Time  # Dacă orele sunt tratate ca timp
 
 class Maintenance(SQL_Base):

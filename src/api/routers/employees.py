@@ -1,26 +1,34 @@
-from fastapi import APIRouter, Response
-#from fastapi.exceptions import HTTPException
-#from typing import List
-#from src.common.data_transfer_objects.employees import EmployeeDto
-
-from src.common.data_transfer_objects.employees import AddEmployeeDto
-from src.db.sql.queries.employees import add_employee_into_the_db
+from fastapi import APIRouter, Response, HTTPException
+from typing import List
+from src.common.data_transfer_objects.employees import AddEmployeeDto, EmployeeDto
+from src.db.sql.queries.employees import (
+    add_employee_into_the_db,
+    get_all_employees_from_db,
+    delete_employee_by_id
+)
 
 router = APIRouter()
 
-# GET -> fetch data
-# PUT -> add data
-# POST -> functions
-# DELETE -> delete add
-
 @router.put("")
 def add_employee(dto: AddEmployeeDto) -> Response:
-    """
-    Adds an employee to the database
-    """
-
     add_employee_into_the_db(
         name=dto.name,
         position=dto.position,
         start_hour=dto.start_hour,
-        end_hour=dto.end_hour,)
+        end_hour=dto.end_hour,
+    )
+    return Response(status_code=200)
+
+@router.get("", response_model=List[EmployeeDto])
+def get_all_employees():
+    employees = get_all_employees_from_db()
+    if not employees:
+        raise HTTPException(status_code=404, detail="No employees found")
+    return employees
+
+@router.delete("/{employee_id}")
+def delete_employee(employee_id: int):
+    success = delete_employee_by_id(employee_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    return {"message": "Employee deleted successfully"}

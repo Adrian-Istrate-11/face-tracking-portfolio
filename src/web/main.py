@@ -6,7 +6,7 @@ import os
 from dash_iconify import DashIconify
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 #print(sys.path)
-from config import DASH_HOST, DASH_PORT
+from src.config import DASH_HOST, DASH_PORT
 from src.web.callbacks import register_all_callbacks
 from src.web.components.header import Header
 from src.web.components.add_employee import AddEmployeeComponent
