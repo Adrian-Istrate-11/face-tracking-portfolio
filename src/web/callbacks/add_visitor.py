@@ -1,5 +1,5 @@
 import requests
-from dash import Dash, callback_context
+from dash import Dash, html, callback_context
 from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output
 
@@ -33,6 +33,14 @@ def register_add_visitor_callbacks(app: Dash) -> None:
                 alert_triggered=visitor_alert_triggered if visitor_alert_triggered is not None else False
             )
             response = requests.put(f"{API_URL}/visitor", timeout=5, data=dto.json())
-            return response.status_code
+
+            if response.status_code in (200, 204):
+                return html.Div([
+                    html.P("Visitor added successfully!", style={"color": "green"})
+                ])
+
+            return html.Div([
+                html.P(f"Error adding visitor: {response.status_code}", style={"color": "red"})
+            ])
 
         raise PreventUpdate

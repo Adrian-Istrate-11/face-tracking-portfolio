@@ -1,40 +1,32 @@
 import dash_mantine_components as dmc
-
+from dash import html
 from src.web.components.base import DashAppBaseComponent
 
-
 class AddPersonComponent(DashAppBaseComponent):
-
     def __init__(self):
         pass
 
     def render(self):
         return dmc.Stack(
             children=[
-                dmc.TextInput(
-                    id="add-person-name",
-                    label="Person Name:",
-                    w=200
+                dmc.TextInput(id="add-person-name", label="Person Name:", w=200),
+                dmc.TextInput(id="add-person-person_type", label="Person Type:", w=200),
+                dmc.TextInput(id="add-person-entry_time", label="Entry Time:", w=200),
+                dmc.TextInput(id="add-person-exit_time", label="Exit Time:", w=200),
+                
+                dmc.Group(
+                    children=[
+                        dmc.Button(id="add-person-button", children="Add Person", w=200),
+                        dmc.Button(id="get-persons-button", children="Show All Persons", color="blue", w=200)
+                    ]
                 ),
-                dmc.TextInput(
-                    id="add-person-person_type",
-                    label="Person Type:",
-                    w=200
-                ),
-                dmc.TextInput(
-                    id="add-person-entry_time",
-                    label="Person Entry-time",
-                    w=200
-                ),
-                dmc.TextInput(
-                    id="add-person-exit_time",
-                    label="Person Exit-time1",
-                    w=200
-                ),
-                dmc.Button(
-                    id="add-person-button",
-                    children="Add person",
-                    w=200,
-                ),
-            ],
+
+                html.Div(id="get-persons-output"),
+
+                dmc.Divider(),
+
+                dmc.NumberInput(id="delete-person-id", label="Person ID to Delete", w=200),
+                dmc.Button(id="delete-person-button", children="Delete Person", color="red", w=200),
+                html.Div(id="delete-person-output"),
+            ]
         )

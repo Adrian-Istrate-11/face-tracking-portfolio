@@ -1,13 +1,8 @@
 from src.db.sql.connection import SQLSesssion
 from src.db.sql.models import Visitors
+from src.common.data_transfer_objects.visitors import VisitorDto
 
-
-
-
-def add_visitor_into_the_db(name: str, reason : str ,duration_hours: int ,alert_triggered: bool) -> None:
-    """
-    Add a visitor into the database
-    """
+def add_visitor_into_the_db(name: str, reason: str, duration_hours: int, alert_triggered: bool) -> None:
     with SQLSesssion() as session:
         visitor = Visitors(
             name=name,
@@ -17,3 +12,15 @@ def add_visitor_into_the_db(name: str, reason : str ,duration_hours: int ,alert_
         )
         session.add(visitor)
         session.commit()
+
+def get_all_visitors_from_db() -> list[VisitorDto]:
+    with SQLSesssion() as session:
+        visitors = session.query(Visitors).all()
+        return [VisitorDto.from_orm(visitor) for visitor in visitors]
+
+def delete_visitor_by_id(visitor_id: int) -> None:
+    with SQLSesssion() as session:
+        visitor = session.query(Visitors).get(visitor_id)
+        if visitor:
+            session.delete(visitor)
+            session.commit()

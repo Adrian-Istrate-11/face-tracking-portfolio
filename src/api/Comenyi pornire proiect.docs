@@ -1,0 +1,10 @@
+cd "D:\Academia Nenos curs Python Developer\Proiect final Academie Nenos Python\nenos_face_tracking_repo"
+
+
+.\.venv\Scripts\Activate.ps1
+
+
+$env:PYTHONPATH = "src"
+
+
+uvicorn api.main:app --host 127.0.0.1 --port 8080

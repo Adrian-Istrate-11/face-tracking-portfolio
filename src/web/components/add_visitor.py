@@ -29,6 +29,7 @@ class AddVisitorComponent(DashAppBaseComponent):
                 dmc.Checkbox(
                     id="add-visitor-alert_triggered",
                     label="Was the alarm turned on?",
+                    value=False,
                     mb=10
                 ),
                 dmc.Button(
