@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  api:
+    repository: anyan11tm/face-tracking-api
+    tag: latest
+    pullPolicy: IfNotPresent
+  web:
+    repository: anyan11tm/face-tracking-web
+    tag: latest
+    pullPolicy: IfNotPresent
+
+service:
+  api:
+    port: 8080
+  web:
+    port: 8050
+
+ingress:
+  enabled: false

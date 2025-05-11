@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "face-tracking.fullname" . }}-ingress
+  labels:
+    {{ include "face-tracking.labels" . | indent 4 }}
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "face-tracking.fullname" . }}-api
+                port:
+                  number: {{ .Values.service.api.port }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "face-tracking.fullname" . }}-web
+                port:
+                  number: {{ .Values.service.web.port }}
+{{- end }}

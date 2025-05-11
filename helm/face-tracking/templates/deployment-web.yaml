@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "face-tracking.fullname" . }}-web
+  labels:
+    app: {{ include "face-tracking.fullname" . }}-web
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "face-tracking.fullname" . }}-web
+  template:
+    metadata:
+      labels:
+        app: {{ include "face-tracking.fullname" . }}-web
+    spec:
+      containers:
+      - name: web
+        image: "{{ .Values.image.web.repository }}:{{ .Values.image.web.tag }}"
+        imagePullPolicy: {{ .Values.image.web.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.web.port }}

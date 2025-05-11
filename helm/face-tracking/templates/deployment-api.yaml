@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "face-tracking.fullname" . }}-api
+  labels:
+    app: {{ include "face-tracking.fullname" . }}-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "face-tracking.fullname" . }}-api
+  template:
+    metadata:
+      labels:
+        app: {{ include "face-tracking.fullname" . }}-api
+    spec:
+      containers:
+      - name: api
+        image: "{{ .Values.image.api.repository }}:{{ .Values.image.api.tag }}"
+        imagePullPolicy: {{ .Values.image.api.pullPolicy }}
+        env:
+        - name: PYTHONPATH
+          value: "/app/src"
+        ports:
+        - containerPort: {{ .Values.service.api.port }}
+        command: ["uvicorn"]
+        args:
+        - "api.main:app"
+        - "--host"
+        - "0.0.0.0"
+        - "--port"
+        - "{{ .Values.service.api.port }}"

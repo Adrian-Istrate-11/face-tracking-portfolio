@@ -1,10 +1,12 @@
 import dash_mantine_components as dmc
-from dash import html
+from dash import html, dcc
+
 from src.web.components.base import DashAppBaseComponent
+
 
 class AddPersonComponent(DashAppBaseComponent):
     def __init__(self):
-        pass
+        super().__init__()
 
     def render(self):
         return dmc.Stack(
@@ -13,14 +15,26 @@ class AddPersonComponent(DashAppBaseComponent):
                 dmc.TextInput(id="add-person-person_type", label="Person Type:", w=200),
                 dmc.TextInput(id="add-person-entry_time", label="Entry Time:", w=200),
                 dmc.TextInput(id="add-person-exit_time", label="Exit Time:", w=200),
-                
+
                 dmc.Group(
                     children=[
                         dmc.Button(id="add-person-button", children="Add Person", w=200),
-                        dmc.Button(id="get-persons-button", children="Show All Persons", color="blue", w=200)
+                        dmc.Button(id="get-persons-button", children="Show All Persons", color="blue", w=200),
                     ]
                 ),
 
+                # Feedback message for Add Person
+                html.Div(id="add-person-feedback", style={"display": "none"}),
+
+                # Auto-dismiss interval
+                dcc.Interval(
+                    id="add-person-feedback-interval",
+                    interval=3_000,   # 3 seconds
+                    n_intervals=0,
+                    disabled=True,
+                ),
+
+                # Container for list of persons
                 html.Div(id="get-persons-output"),
 
                 dmc.Divider(),

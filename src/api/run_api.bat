@@ -1,14 +1,21 @@
 @echo off
-:: ----  CONFIG  ---------------------------------------------------
-set PROJECT_DIR=D:\Academia Nenos curs Python Developer\Proiect final Academie Nenos Python\nenos_face_tracking_repo
-set PYTHONPATH=src
-set HOST=127.0.0.1
-set PORT=8080
-:: -----------------------------------------------------------------
+REM Ne mutăm în rădăcina repo-ului
+pushd "%~dp0\..\.."
 
-pushd "%PROJECT_DIR%"
-call ".venv\Scripts\activate.bat"
-set PYTHONPATH=%PYTHONPATH%
-echo Starting API on http://%HOST%:%PORT% ...
-uvicorn api.main:app --host %HOST% --port %PORT% --reload
+REM Activăm virtualenv-ul
+call .venv\Scripts\activate.bat
+
+REM Adăugăm src în PYTHONPATH
+set PYTHONPATH=%CD%\src
+
+REM Pornim API-ul
+start "API Server" cmd /c "uvicorn src.api.main:app --host 127.0.0.1 --port 8080 --reload"
+
+REM Dăm un mic delay
+timeout /t 2 >nul
+
+REM Deschidem browser-ul automat la Swagger UI
+start http://127.0.0.1:8080/docs
+
 popd
+pause
