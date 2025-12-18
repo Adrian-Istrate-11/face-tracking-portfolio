@@ -2,14 +2,14 @@
 
 > **Autor**: Adrian Istrate  
 > **Compatibilitate**: Testat pe Windows cu Python 3.12  
-> **Stare**: Separat de `main`, NU afectează varianta colegei
+> **Stare**: Separat de `main`
 
-## 🔧 Funcționalități implementate
-- ✅ Adăugare angajați (`PUT /employees`)
-- ✅ Afișare toți angajații (`GET /employees`)
-- ✅ Ștergere angajat după ID (`DELETE /employees/{id}`)
+##  Funcționalități implementate
+-  Adăugare angajați (`PUT /employees`)
+-  Afișare toți angajații (`GET /employees`)
+-  Ștergere angajat după ID (`DELETE /employees/{id}`)
 
-## 📂 Fișiere modificate
+##  Fișiere modificate
 Toate modificările au fost făcute pas cu pas, doar în logica pentru „employee”:
 
 | Fișier                                      | Cale                                      | Tip modificare |
@@ -19,7 +19,7 @@ Toate modificările au fost făcute pas cu pas, doar în logica pentru „employ
 | `employees.py`                             | `src/db/sql/models/`                      | Adăugat `extend_existing=True` |
 | `employees.py`                             | `src/db/sql/queries/`                     | Adăugat funcții `get_all_employees_from_db` și `delete_employee_by_id` |
 
-## 📊 Cum se testează
+##  Cum se testează
 1. Pornește serverul local cu:
    ```bash
    uvicorn api.main:app --reload
@@ -35,5 +35,3 @@ Toate modificările au fost făcute pas cu pas, doar în logica pentru „employ
    - `GET /employees` – returnează lista angajaților
    - `DELETE /employees/{id}` – șterge un angajat după ID
 
-## 💡 Notă
-Această versiune este separată în branch-ul `adrian-py312`, nu modifică direct `main`. Se poate testa și compara fără a afecta lucrarea originală.
