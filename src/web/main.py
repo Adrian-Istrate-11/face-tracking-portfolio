@@ -1,8 +1,10 @@
+# src/web/main.py
 import dash
 import dash_mantine_components as dmc
 from dash import html, dcc
 from dash_iconify import DashIconify
 
+from src.config import DASH_HOST, DASH_PORT
 from src.web.callbacks import register_all_callbacks
 from src.web.components.header import Header, Subtitle
 from src.web.components.add_employee import AddEmployeeComponent
@@ -14,9 +16,8 @@ from src.web.callbacks.api_status import register_api_status_callbacks
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 app.title = "Face-Tracking App"
 
-# pentru Render (gunicorn)
+# for Render (gunicorn)
 server = app.server
-
 
 app.layout = dmc.MantineProvider(
     children=dmc.Stack(
@@ -30,7 +31,6 @@ app.layout = dmc.MantineProvider(
                 ],
             ),
             dmc.Divider(variant="solid"),
-
             dmc.Accordion(
                 children=[
                     dmc.AccordionItem(
@@ -39,7 +39,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Employee",
-                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
+                                    style={
+                                        "fontFamily": "Arial, sans-serif",
+                                        "fontSize": "24px",
+                                        "fontWeight": "bold",
+                                    },
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
@@ -54,7 +58,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Person",
-                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
+                                    style={
+                                        "fontFamily": "Arial, sans-serif",
+                                        "fontSize": "24px",
+                                        "fontWeight": "bold",
+                                    },
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
@@ -69,7 +77,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Visitor",
-                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
+                                    style={
+                                        "fontFamily": "Arial, sans-serif",
+                                        "fontSize": "24px",
+                                        "fontWeight": "bold",
+                                    },
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
@@ -84,7 +96,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Maintenance",
-                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
+                                    style={
+                                        "fontFamily": "Arial, sans-serif",
+                                        "fontSize": "24px",
+                                        "fontWeight": "bold",
+                                    },
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
@@ -95,9 +111,7 @@ app.layout = dmc.MantineProvider(
                     ),
                 ]
             ),
-
             dcc.Interval(id="webapp-refresh-timer", interval=60_000, n_intervals=0),
-
             html.Div(style={"marginTop": "3rem"}),
             dmc.Center(dmc.Image(src="/assets/FaceTrackingApp.jpg", opacity=0.75, maw=400)),
             html.Div(style={"height": "1rem"}),
@@ -110,4 +124,4 @@ register_all_callbacks(app)
 register_api_status_callbacks(app)
 
 if __name__ == "__main__":
-    app.run(host=DASH_HOST, port=int(DASH_PORT), debug=True)
+    app.run_server(host=DASH_HOST, port=DASH_PORT, debug=False)
