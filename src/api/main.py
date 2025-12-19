@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,9 +11,19 @@ from api.routers.visitors import router as visitors_router
 
 from db.sql.init_db import init_db
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    init_db()
+    yield
+    # Shutdown (nimic de inchis acum)
+
+
 app = FastAPI(
     title="Nenos Academy Face-tracking API",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -22,17 +34,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-def startup():
-    init_db()
 
 @app.get("/")
 def root():
     return {"message": "API is running"}
 
-@app.get("/health")
+
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health():
     return {"status": "ok"}
+
 
 app.include_router(status_router, prefix="/api")
 app.include_router(employees_router, prefix="/employees")
