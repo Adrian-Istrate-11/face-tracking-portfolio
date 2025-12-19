@@ -3,17 +3,13 @@ import dash_mantine_components as dmc
 from dash import html, dcc
 from dash_iconify import DashIconify
 
-# IMPORTANT:
-# Daca pe Render ai Root Directory = "src", importurile trebuie FARA "src."
-from src.config import DASH_HOST, DASH_PORT
-from web.callbacks import register_all_callbacks
-from web.components.header import Header, Subtitle
-from web.components.add_employee import AddEmployeeComponent
-from web.components.add_person import AddPersonComponent
-from web.components.add_visitor import AddVisitorComponent
-from web.components.add_maintenance import AddMaintenanceComponent
-from web.callbacks.api_status import register_api_status_callbacks
-
+from src.web.callbacks import register_all_callbacks
+from src.web.components.header import Header, Subtitle
+from src.web.components.add_employee import AddEmployeeComponent
+from src.web.components.add_person import AddPersonComponent
+from src.web.components.add_visitor import AddVisitorComponent
+from src.web.components.add_maintenance import AddMaintenanceComponent
+from src.web.callbacks.api_status import register_api_status_callbacks
 
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 app.title = "Face-Tracking App"
