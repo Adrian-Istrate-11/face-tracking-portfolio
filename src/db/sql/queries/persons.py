@@ -1,6 +1,6 @@
-from src.db.sql.connection import SQLSesssion
-from src.db.sql.models import Person
-from src.common.data_transfer_objects.persons import PersonDto
+from db.sql.connection import SQLSesssion
+from db.sql.models import Person
+from common.data_transfer_objects.persons import PersonDto
 
 def add_person_into_the_db(person_name: str, person_type: str, entry_time: int, exit_time: int) -> None:
     """

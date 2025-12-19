@@ -1,6 +1,6 @@
-from src.db.sql.connection import SQLSesssion
-from src.db.sql.models.employee import Employee
-from src.common.data_transfer_objects.employees import AddEmployeeDto, EmployeeDto
+from db.sql.connection import SQLSesssion
+from db.sql.models.employee import Employee
+from common.data_transfer_objects.employees import AddEmployeeDto, EmployeeDto
 
 def add_employee_into_the_db(name: str, position: str, start_hour: int, end_hour: int):
     with SQLSesssion() as session:

@@ -1,6 +1,7 @@
-from src.db.sql.connection import SQLSesssion
-from src.db.sql.models import Maintenance
-from src.common.data_transfer_objects.maintenances import MaintenanceDto
+from db.sql.connection import SQLSesssion
+from db.sql.models import Maintenance
+from common.data_transfer_objects.maintenances import MaintenanceDto
+
 
 def add_maintenance_into_the_db(name: str, start_hour: int, end_hour: int) -> None:
     """

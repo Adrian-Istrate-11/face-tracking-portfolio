@@ -1,6 +1,6 @@
-from src.db.sql.connection import SQLSesssion
-from src.db.sql.models import Visitors
-from src.common.data_transfer_objects.visitors import VisitorDto
+from db.sql.connection import SQLSesssion
+from db.sql.models import Visitors
+from common.data_transfer_objects.visitors import VisitorDto
 
 def add_visitor_into_the_db(name: str, reason: str, duration_hours: int, alert_triggered: bool) -> None:
     with SQLSesssion() as session:
