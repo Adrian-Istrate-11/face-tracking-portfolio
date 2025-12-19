@@ -7,24 +7,37 @@ from config import DBNAME  # fara 'src.'
 
 load_dotenv()
 
-SQL_DRIVERS = os.getenv("SQL_DRIVERS", "mysql+pymysql")
-SQL_HOST = os.getenv("SQL_HOST", "localhost")
-SQL_PORT = os.getenv("SQL_PORT", "")  # optional
-SQL_DBNAME = os.getenv("SQL_DBNAME", DBNAME)
-SQL_USER = os.getenv("SQL_USER", "root")
-SQL_PASSWORD = os.getenv("SQL_PASSWORD", "1117")
+SQL_Base = declarative_base()
 
 
 def generate_sql_url() -> str:
-    port_part = f":{SQL_PORT}" if SQL_PORT else ""
-    return f"{SQL_DRIVERS}://{SQL_USER}:{SQL_PASSWORD}@{SQL_HOST}{port_part}/{SQL_DBNAME}"
+    # 1) Render / production: DATABASE_URL (cel mai simplu)
+    db_url = os.getenv("DATABASE_URL")
+    if db_url:
+        # SQLAlchemy vrea driver explicit
+        url = db_url.replace("postgresql://", "postgresql+psycopg2://", 1)
+
+        # Render Postgres cere de obicei SSL
+        if "sslmode=" not in url:
+            sep = "&" if "?" in url else "?"
+            url = f"{url}{sep}sslmode=require"
+
+        return url
+
+    # 2) Local fallback: din variabile separate
+    drivers = os.getenv("SQL_DRIVERS", "postgresql+psycopg2")
+    host = os.getenv("SQL_HOST", "localhost")
+    port = os.getenv("SQL_PORT", "5432")
+    dbname = os.getenv("SQL_DBNAME", DBNAME)
+    user = os.getenv("SQL_USER", "postgres")
+    password = os.getenv("SQL_PASSWORD", "")
+
+    return f"{drivers}://{user}:{password}@{host}:{port}/{dbname}"
 
 
 SQL_URL = generate_sql_url()
 SQL_ENGINE = sqlalchemy.create_engine(SQL_URL, pool_pre_ping=True)
 _SQL_SESSIONMAKER = sessionmaker(bind=SQL_ENGINE)
-
-SQL_Base = declarative_base()
 
 
 class SQLSesssion:
