@@ -5,7 +5,7 @@ from dash_iconify import DashIconify
 
 # IMPORTANT:
 # Daca pe Render ai Root Directory = "src", importurile trebuie FARA "src."
-from config import DASH_HOST, DASH_PORT
+from src.config import DASH_HOST, DASH_PORT
 from web.callbacks import register_all_callbacks
 from web.components.header import Header, Subtitle
 from web.components.add_employee import AddEmployeeComponent
