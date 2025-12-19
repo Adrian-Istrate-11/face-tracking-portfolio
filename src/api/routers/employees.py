@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Response, HTTPException
 from typing import List
-from src.common.data_transfer_objects.employees import AddEmployeeDto, EmployeeDto
-from src.db.sql.queries.employees import (
+
+from common.data_transfer_objects.employees import AddEmployeeDto, EmployeeDto
+from db.sql.queries.employees import (
     add_employee_into_the_db,
     get_all_employees_from_db,
     delete_employee_by_id
