@@ -1,7 +1,7 @@
 import dash_mantine_components as dmc
 from dash import html, dcc
 
-from src.web.components.base import DashAppBaseComponent
+from web.components.base import DashAppBaseComponent
 
 
 class AddVisitorComponent(DashAppBaseComponent):

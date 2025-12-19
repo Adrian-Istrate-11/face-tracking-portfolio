@@ -1,7 +1,7 @@
 import dash_mantine_components as dmc
 from dash import html, dcc
 
-from src.web.components.base import DashAppBaseComponent
+from web.components.base import DashAppBaseComponent
 
 
 class AddEmployeeComponent(DashAppBaseComponent):
@@ -23,18 +23,15 @@ class AddEmployeeComponent(DashAppBaseComponent):
                     ]
                 ),
 
-                # Feedback area (hidden until needed)
                 html.Div(id="add-employee-feedback", style={"display": "none"}),
 
-                # Auto-dismiss interval for feedback
                 dcc.Interval(
                     id="add-employee-feedback-interval",
-                    interval=3_000,    # 3 seconds
+                    interval=3_000,
                     n_intervals=0,
                     disabled=True,
                 ),
 
-                # Container for listing employees
                 html.Div(id="get-employees-output"),
 
                 dmc.Divider(),

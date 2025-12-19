@@ -1,7 +1,7 @@
 import dash_mantine_components as dmc
 from dash import html, dcc
 
-from src.web.components.base import DashAppBaseComponent
+from web.components.base import DashAppBaseComponent
 
 
 class AddPersonComponent(DashAppBaseComponent):
@@ -23,18 +23,15 @@ class AddPersonComponent(DashAppBaseComponent):
                     ]
                 ),
 
-                # Feedback message for Add Person
                 html.Div(id="add-person-feedback", style={"display": "none"}),
 
-                # Auto-dismiss interval
                 dcc.Interval(
                     id="add-person-feedback-interval",
-                    interval=3_000,   # 3 seconds
+                    interval=3_000,
                     n_intervals=0,
                     disabled=True,
                 ),
 
-                # Container for list of persons
                 html.Div(id="get-persons-output"),
 
                 dmc.Divider(),
