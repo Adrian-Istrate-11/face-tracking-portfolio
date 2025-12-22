@@ -4,7 +4,8 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
 from src.config import API_URL
-from src.common.data_transfer_objects.<ceva> import <Dto>
+from src.common.data_transfer_objects.persons import AddPersonDto
+
 
 def register_add_person_callbacks(app: Dash) -> None:
 
