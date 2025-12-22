@@ -16,7 +16,7 @@ from src.web.callbacks.api_status import register_api_status_callbacks
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
 app.title = "Face-Tracking App"
 
-# for Render (gunicorn)
+# IMPORTANT: Render pornește cu gunicorn și are nevoie de variabila `server`
 server = app.server
 
 app.layout = dmc.MantineProvider(
@@ -31,6 +31,7 @@ app.layout = dmc.MantineProvider(
                 ],
             ),
             dmc.Divider(variant="solid"),
+
             dmc.Accordion(
                 children=[
                     dmc.AccordionItem(
@@ -39,17 +40,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Employee",
-                                    style={
-                                        "fontFamily": "Arial, sans-serif",
-                                        "fontSize": "24px",
-                                        "fontWeight": "bold",
-                                    },
+                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
-                            dmc.AccordionPanel(
-                                html.Div(id="employee-content", children=AddEmployeeComponent().render())
-                            ),
+                            dmc.AccordionPanel(html.Div(id="employee-content", children=AddEmployeeComponent().render())),
                         ],
                     ),
                     dmc.AccordionItem(
@@ -58,17 +53,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Person",
-                                    style={
-                                        "fontFamily": "Arial, sans-serif",
-                                        "fontSize": "24px",
-                                        "fontWeight": "bold",
-                                    },
+                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
-                            dmc.AccordionPanel(
-                                html.Div(id="person-content", children=AddPersonComponent().render())
-                            ),
+                            dmc.AccordionPanel(html.Div(id="person-content", children=AddPersonComponent().render())),
                         ],
                     ),
                     dmc.AccordionItem(
@@ -77,17 +66,11 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Visitor",
-                                    style={
-                                        "fontFamily": "Arial, sans-serif",
-                                        "fontSize": "24px",
-                                        "fontWeight": "bold",
-                                    },
+                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
-                            dmc.AccordionPanel(
-                                html.Div(id="visitor-content", children=AddVisitorComponent().render())
-                            ),
+                            dmc.AccordionPanel(html.Div(id="visitor-content", children=AddVisitorComponent().render())),
                         ],
                     ),
                     dmc.AccordionItem(
@@ -96,11 +79,7 @@ app.layout = dmc.MantineProvider(
                             dmc.AccordionControl(
                                 dmc.Text(
                                     "Maintenance",
-                                    style={
-                                        "fontFamily": "Arial, sans-serif",
-                                        "fontSize": "24px",
-                                        "fontWeight": "bold",
-                                    },
+                                    style={"fontFamily": "Arial, sans-serif", "fontSize": "24px", "fontWeight": "bold"},
                                 ),
                                 icon=DashIconify(icon="tabler:user", color="green", width=20),
                             ),
@@ -111,7 +90,9 @@ app.layout = dmc.MantineProvider(
                     ),
                 ]
             ),
+
             dcc.Interval(id="webapp-refresh-timer", interval=60_000, n_intervals=0),
+
             html.Div(style={"marginTop": "3rem"}),
             dmc.Center(dmc.Image(src="/assets/FaceTrackingApp.jpg", opacity=0.75, maw=400)),
             html.Div(style={"height": "1rem"}),
@@ -123,5 +104,6 @@ app.layout = dmc.MantineProvider(
 register_all_callbacks(app)
 register_api_status_callbacks(app)
 
+# Pentru local (opțional)
 if __name__ == "__main__":
-    app.run_server(host=DASH_HOST, port=DASH_PORT, debug=False)
+    app.run(host=DASH_HOST, port=DASH_PORT, debug=True)

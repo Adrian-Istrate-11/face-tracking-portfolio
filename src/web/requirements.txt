@@ -1,0 +1,7 @@
+dash
+dash-mantine-components
+dash-iconify
+flask
+gunicorn
+requests
+python-dotenv
