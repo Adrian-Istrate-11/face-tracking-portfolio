@@ -1,9 +1,9 @@
 import requests
-from dash import Dash, html, no_update
+from dash import Dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from config import API_URL
+from src.config import API_URL
 from common.data_transfer_objects.visitors import AddVisitorDto
 
 

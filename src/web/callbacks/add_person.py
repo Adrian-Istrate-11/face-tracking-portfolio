@@ -1,9 +1,9 @@
 import requests
-from dash import Dash, html, no_update
+from dash import Dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from config import API_URL
+from src.config import API_URL
 from common.data_transfer_objects.persons import AddPersonDto
 
 
@@ -28,7 +28,13 @@ def register_add_person_callbacks(app: Dash) -> None:
         if not n:
             raise PreventUpdate
 
-        dto = AddPersonDto(person_name=name, person_type=ptype, entry_time=entry, exit_time=exit_)
+        dto = AddPersonDto(
+            person_name=name,
+            person_type=ptype,
+            entry_time=entry,
+            exit_time=exit_,
+        )
+
         resp = requests.put(f"{API_URL}/person", json=dto.dict(), timeout=5)
 
         if resp.status_code in (200, 204):

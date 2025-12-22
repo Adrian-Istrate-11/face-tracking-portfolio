@@ -1,9 +1,9 @@
 import requests
-from dash import Dash, html, no_update
+from dash import Dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from config import API_URL
+from src.config import API_URL
 from common.data_transfer_objects.employees import AddEmployeeDto
 
 
@@ -29,14 +29,35 @@ def register_add_employee_callbacks(app: Dash) -> None:
             raise PreventUpdate
 
         if not all([name, position, start_hour, end_hour]):
-            return "Complete all fields.", {"display": "block", "color": "orange"}, True, name, position, start_hour, end_hour
+            return (
+                "Complete all fields.",
+                {"display": "block", "color": "orange"},
+                True,
+                name,
+                position,
+                start_hour,
+                end_hour,
+            )
 
-        dto = AddEmployeeDto(name=name, position=position, start_hour=start_hour, end_hour=end_hour)
+        dto = AddEmployeeDto(
+            name=name,
+            position=position,
+            start_hour=start_hour,
+            end_hour=end_hour,
+        )
 
         try:
             resp = requests.put(f"{API_URL}/employees", json=dto.dict(), timeout=5)
         except Exception as exc:
-            return f"Error: {exc}", {"display": "block", "color": "red"}, True, name, position, start_hour, end_hour
+            return (
+                f"Error: {exc}",
+                {"display": "block", "color": "red"},
+                True,
+                name,
+                position,
+                start_hour,
+                end_hour,
+            )
 
         if resp.status_code in (200, 204):
             return "Employee added.", {"display": "block", "color": "green"}, False, "", "", "", ""
