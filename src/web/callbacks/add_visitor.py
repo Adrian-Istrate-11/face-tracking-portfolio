@@ -4,8 +4,7 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
 from src.config import API_URL
-from common.data_transfer_objects.visitors import AddVisitorDto
-
+from src.common.data_transfer_objects.<ceva> import <Dto>
 
 def register_add_visitor_callbacks(app: Dash) -> None:
 
