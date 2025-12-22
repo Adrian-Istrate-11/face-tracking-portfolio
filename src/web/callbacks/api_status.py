@@ -1,8 +1,8 @@
-# src/web/callbacks/api_status.py
 import requests
 from dash import Input, Output
 
 from src.config import API_URL
+
 
 def register_api_status_callbacks(app):
     @app.callback(
@@ -12,9 +12,7 @@ def register_api_status_callbacks(app):
     )
     def _check_api(_):
         try:
-            r = requests.get(f"{API_URL}/health", timeout=5)
-            if r.status_code == 200:
-                return "API:  online"
-            return f"API:  status {r.status_code}"
-        except Exception:
-            return "API:  offline"
+            r = requests.get(f"{API_URL}/", timeout=5)
+            return f"API: online  ({r.status_code}) @ {API_URL}"
+        except Exception as e:
+            return f"API: offline  @ {API_URL} | {type(e).__name__}: {e}"

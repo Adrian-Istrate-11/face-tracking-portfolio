@@ -6,6 +6,7 @@ from dash.exceptions import PreventUpdate
 from src.config import API_URL
 from src.common.data_transfer_objects.employees import AddEmployeeDto
 
+
 def register_add_employee_callbacks(app: Dash) -> None:
 
     @app.callback(
@@ -27,9 +28,10 @@ def register_add_employee_callbacks(app: Dash) -> None:
         if not n_clicks:
             raise PreventUpdate
 
+        # Validare
         if not all([name, position, start_hour, end_hour]):
             return (
-                "Complete all fields.",
+                " Complete all fields.",
                 {"display": "block", "color": "orange"},
                 True,
                 name,
@@ -38,19 +40,15 @@ def register_add_employee_callbacks(app: Dash) -> None:
                 end_hour,
             )
 
-        dto = AddEmployeeDto(
-            name=name,
-            position=position,
-            start_hour=start_hour,
-            end_hour=end_hour,
-        )
+        dto = AddEmployeeDto(name=name, position=position, start_hour=start_hour, end_hour=end_hour)
 
+        url = f"{API_URL}/employees"
         try:
-            resp = requests.put(f"{API_URL}/employees", json=dto.dict(), timeout=5)
+            resp = requests.put(url, json=dto.dict(), timeout=10)
         except Exception as exc:
             return (
-                f"Error: {exc}",
-                {"display": "block", "color": "red"},
+                f" Request failed to {url}\n{type(exc).__name__}: {exc}",
+                {"display": "block", "color": "red", "whiteSpace": "pre-wrap"},
                 True,
                 name,
                 position,
@@ -58,7 +56,24 @@ def register_add_employee_callbacks(app: Dash) -> None:
                 end_hour,
             )
 
-        if resp.status_code in (200, 204):
-            return "Employee added.", {"display": "block", "color": "green"}, False, "", "", "", ""
+        # Afișează clar răspunsul API, indiferent de status
+        if resp.status_code in (200, 201, 204):
+            return (
+                f" Added via {url} (status {resp.status_code})",
+                {"display": "block", "color": "green"},
+                False,
+                "",
+                "",
+                "",
+                "",
+            )
 
-        return "Failed.", {"display": "block", "color": "red"}, True, name, position, start_hour, end_hour
+        return (
+            f" API error via {url} (status {resp.status_code})\n{resp.text}",
+            {"display": "block", "color": "red", "whiteSpace": "pre-wrap"},
+            True,
+            name,
+            position,
+            start_hour,
+            end_hour,
+        )
