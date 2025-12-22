@@ -41,3 +41,4 @@ def register_add_visitor_callbacks(app: Dash) -> None:
             return "Added.", {"color": "green"}, False, "", "", None, False
 
         return "Failed.", {"color": "red"}, True, name, reason, duration, alert
+
