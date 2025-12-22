@@ -8,7 +8,6 @@ from src.common.data_transfer_objects.employees import AddEmployeeDto
 
 
 def register_add_employee_callbacks(app: Dash) -> None:
-
     @app.callback(
         Output("add-employee-feedback", "children"),
         Output("add-employee-feedback", "style"),
@@ -28,10 +27,9 @@ def register_add_employee_callbacks(app: Dash) -> None:
         if not n_clicks:
             raise PreventUpdate
 
-        # Validare
         if not all([name, position, start_hour, end_hour]):
             return (
-                " Complete all fields.",
+                "All fields are required.",
                 {"display": "block", "color": "orange"},
                 True,
                 name,
@@ -40,15 +38,23 @@ def register_add_employee_callbacks(app: Dash) -> None:
                 end_hour,
             )
 
-        dto = AddEmployeeDto(name=name, position=position, start_hour=start_hour, end_hour=end_hour)
+        dto = AddEmployeeDto(
+            name=name,
+            position=position,
+            start_hour=start_hour,
+            end_hour=end_hour,
+        )
 
-        url = f"{API_URL}/employees"
         try:
-            resp = requests.put(url, json=dto.dict(), timeout=10)
-        except Exception as exc:
+            resp = requests.put(
+                f"{API_URL}/employees",
+                json=dto.dict(),
+                timeout=10,
+            )
+        except Exception as e:
             return (
-                f" Request failed to {url}\n{type(exc).__name__}: {exc}",
-                {"display": "block", "color": "red", "whiteSpace": "pre-wrap"},
+                f"Request error: {e}",
+                {"display": "block", "color": "red"},
                 True,
                 name,
                 position,
@@ -56,10 +62,9 @@ def register_add_employee_callbacks(app: Dash) -> None:
                 end_hour,
             )
 
-        # Afișează clar răspunsul API, indiferent de status
         if resp.status_code in (200, 201, 204):
             return (
-                f" Added via {url} (status {resp.status_code})",
+                "Employee added successfully.",
                 {"display": "block", "color": "green"},
                 False,
                 "",
@@ -69,11 +74,37 @@ def register_add_employee_callbacks(app: Dash) -> None:
             )
 
         return (
-            f" API error via {url} (status {resp.status_code})\n{resp.text}",
-            {"display": "block", "color": "red", "whiteSpace": "pre-wrap"},
+            f"API error {resp.status_code}: {resp.text}",
+            {"display": "block", "color": "red"},
             True,
             name,
             position,
             start_hour,
             end_hour,
         )
+
+
+def register_get_employees_callback(app: Dash) -> None:
+    @app.callback(
+        Output("get-employees-output", "children"),
+        Input("get-employees-button", "n_clicks"),
+        prevent_initial_call=True,
+    )
+    def get_all_employees(n_clicks):
+        if not n_clicks:
+            raise PreventUpdate
+
+        try:
+            resp = requests.get(f"{API_URL}/employees", timeout=10)
+            resp.raise_for_status()
+            employees = resp.json()
+        except Exception as e:
+            return f"Error fetching employees: {e}"
+
+        if not employees:
+            return "No employees found."
+
+        return [
+            f"ID {e['id']} | {e['name']} | {e['position']} | {e['start_hour']} - {e['end_hour']}"
+            for e in employees
+        ]
